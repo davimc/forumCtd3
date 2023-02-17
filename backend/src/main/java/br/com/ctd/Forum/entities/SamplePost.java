@@ -1,29 +1,58 @@
 package br.com.ctd.Forum.entities;
 
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class PostImpl implements Post{
+@Entity
+@Table(name = "tb_post")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="post_type",
+        discriminatorType = DiscriminatorType.STRING)
+public abstract sealed class SamplePost implements PostCommnad, Serializable permits Ads, Poll {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    //private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String message;
     private LocalDate date;
     private Long upVote;
     private Long downVote;
-    private Post originalPost;
-    private List<Post> answers = new ArrayList();
 
-    public PostImpl() {
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private SamplePost originalPost;
+
+    @OneToMany(mappedBy = "id")
+    private List<SamplePost> answers = new ArrayList();
+
+    public SamplePost() {
     }
 
-    public PostImpl(String message, LocalDate date, Long upVote, Long downVote, Post originalPost) {
+    public SamplePost(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost) {
+        this.id = id;
+        this.user = user;
         this.message = message;
         this.date = date;
         this.upVote = upVote;
         this.downVote = downVote;
         this.originalPost = originalPost;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMessage() {
@@ -58,19 +87,19 @@ public abstract class PostImpl implements Post{
         this.downVote = downVote;
     }
 
-    public Post getOriginalPost() {
+    public SamplePost getOriginalPost() {
         return originalPost;
     }
 
-    public void setOriginalPost(Post originalPost) {
+    public void setOriginalPost(SamplePost originalPost) {
         this.originalPost = originalPost;
     }
 
-    public List<Post> getAnswers() {
+    public List<SamplePost> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Post> answers) {
+    public void setAnswers(List<SamplePost> answers) {
         this.answers = answers;
     }
 
@@ -89,11 +118,19 @@ public abstract class PostImpl implements Post{
            return upVote - downVote;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PostImpl post = (PostImpl) o;
+        SamplePost post = (SamplePost) o;
         return message.equals(post.message);
     }
 
