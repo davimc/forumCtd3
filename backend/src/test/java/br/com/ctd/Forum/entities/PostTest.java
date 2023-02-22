@@ -12,9 +12,8 @@ public class PostTest {
 
     @Test
     public void postShouldInstantiateWhenConcretClass() throws ClassNotFoundException {
-        Class<PostCommnad> classe = PostCommnad.class;
-        System.out.println(classe.getPermittedSubclasses().length);;
-        Arrays.stream(classe.getPermittedSubclasses()).forEach(p-> System.out.println(p.getPermittedSubclasses().length));
-
+        Class<SamplePost> classe = SamplePost.class;
+        System.out.println(classe.getPermittedSubclasses().length);
+        Arrays.stream(classe.getPermittedSubclasses()).forEach(p-> System.out.println(p.getSimpleName()));
     }
 }
