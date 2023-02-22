@@ -1,6 +1,9 @@
 package br.com.ctd.Forum.entities;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public non-sealed class Question extends SamplePost{
 
@@ -19,5 +22,18 @@ public non-sealed class Question extends SamplePost{
 
     public void setSolved(boolean solved) {
         this.solved = solved;
+    }
+
+    @Override
+    public void execute() {
+        setSolved(!isSolved());
+    }
+
+    @Override
+    public Map<String, ?> getInfos() {
+        Map<String, Boolean> infos = new HashMap<>();
+        infos.put("Solved", isSolved());
+
+        return infos;
     }
 }

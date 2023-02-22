@@ -1,6 +1,8 @@
 package br.com.ctd.Forum.entities;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public non-sealed class Ads extends SamplePost{
 
@@ -13,9 +15,18 @@ public non-sealed class Ads extends SamplePost{
         entry = 0L;
     }
 
-    public void reportEntry() {
+    @Override
+    public void execute() {
         entry++;
     }
+
+    @Override
+    public Map<String, ?> getInfos() {
+        Map<String, Long> info = new HashMap<>();
+        info.put("Entry", getEntry());
+        return info;
+    }
+
     public Long getEntry() {
         return entry;
     }
@@ -23,4 +34,6 @@ public non-sealed class Ads extends SamplePost{
     public void setEntry(Long entry) {
         this.entry = entry;
     }
+
+
 }

@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_post")
@@ -125,7 +123,6 @@ public abstract sealed class SamplePost implements PostCommnad, Serializable per
     public void setUser(User user) {
         this.user = user;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
