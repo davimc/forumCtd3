@@ -13,7 +13,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="post_type",
         discriminatorType = DiscriminatorType.STRING)
-public abstract sealed class SamplePost implements PostCommnad, Serializable permits Ads, Poll {
+public abstract sealed class SamplePost implements PostCommnad, Serializable permits Ads, Poll, Post, Question {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

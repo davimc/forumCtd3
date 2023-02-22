@@ -4,14 +4,23 @@ import java.time.LocalDate;
 
 public non-sealed class Ads extends SamplePost{
 
-    private Long positive;
-    private Long negative;
+    private Long entry;
     public Ads() {
     }
 
-    public Ads(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost, Long positive, Long negative) {
+    public Ads(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost) {
         super(id, user, message, date, upVote, downVote, originalPost);
-        this.positive = positive;
-        this.negative = negative;
+        entry = 0L;
+    }
+
+    public void reportEntry() {
+        entry++;
+    }
+    public Long getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Long entry) {
+        this.entry = entry;
     }
 }
