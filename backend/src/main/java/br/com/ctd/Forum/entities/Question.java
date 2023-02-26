@@ -1,20 +1,25 @@
 package br.com.ctd.Forum.entities;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+import java.time.LocalDate;
+
+@Entity
+@DiscriminatorValue("QUESTION")
 public non-sealed class Question extends SamplePost{
 
     private boolean solved;
     public Question() {
     }
 
-    public Question(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost) {
-        super(id, user, message, date, upVote, downVote, originalPost);
+    public Question(Long id, User user, String message, SamplePost originalPost) {
+        super(id, user, message, originalPost);
         solved = false;
     }
+
+
+
 
     public boolean isSolved() {
         return solved;
@@ -29,11 +34,10 @@ public non-sealed class Question extends SamplePost{
         setSolved(!isSolved());
     }
 
-    @Override
-    public Map<String, ?> getInfos() {
-        Map<String, Boolean> infos = new HashMap<>();
-        infos.put("Solved", isSolved());
-
-        return infos;
+    public static PostCommnad getInstance(PostCommnad obj) {
+        SamplePost newObj = (SamplePost) obj;
+        newObj = new Question(newObj.getId(), newObj.getUser(),newObj.getMessage(), newObj.getOriginalPost());
+        return newObj;
     }
+
 }

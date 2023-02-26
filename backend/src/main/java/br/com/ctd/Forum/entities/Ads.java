@@ -1,17 +1,22 @@
 package br.com.ctd.Forum.entities;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
+@DiscriminatorValue("ADS")
 public non-sealed class Ads extends SamplePost{
 
     private Long entry;
     public Ads() {
     }
 
-    public Ads(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost) {
-        super(id, user, message, date, upVote, downVote, originalPost);
+    public Ads(Long id, User user, String message, SamplePost originalPost) {
+        super(id, user, message, originalPost);
         entry = 0L;
     }
 
@@ -20,11 +25,10 @@ public non-sealed class Ads extends SamplePost{
         entry++;
     }
 
-    @Override
-    public Map<String, ?> getInfos() {
-        Map<String, Long> info = new HashMap<>();
-        info.put("Entry", getEntry());
-        return info;
+    public static PostCommnad getInstance(PostCommnad obj) {
+        SamplePost newObj = (SamplePost) obj;
+        newObj = new Ads(newObj.getId(), newObj.getUser(),newObj.getMessage(), newObj.getOriginalPost());
+        return newObj;
     }
 
     public Long getEntry() {

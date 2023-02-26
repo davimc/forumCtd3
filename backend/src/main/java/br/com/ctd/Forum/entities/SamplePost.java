@@ -11,7 +11,7 @@ import java.util.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="post_type",
         discriminatorType = DiscriminatorType.STRING)
-public abstract sealed class SamplePost implements PostCommnad, Serializable permits Ads, Poll, Post, Question {
+public abstract sealed class SamplePost implements PostCommnad, Serializable permits Ads, Post, Question {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +35,13 @@ public abstract sealed class SamplePost implements PostCommnad, Serializable per
     public SamplePost() {
     }
 
-    public SamplePost(Long id, User user, String message, LocalDate date, Long upVote, Long downVote, SamplePost originalPost) {
+    public SamplePost(Long id, User user, String message,  SamplePost originalPost) {
         this.id = id;
         this.user = user;
         this.message = message;
-        this.date = date;
-        this.upVote = upVote;
-        this.downVote = downVote;
+        this.date = LocalDate.now();
+        this.upVote = 0L;
+        this.downVote = 0L;
         this.originalPost = originalPost;
     }
 
@@ -123,6 +123,11 @@ public abstract sealed class SamplePost implements PostCommnad, Serializable per
     public void setUser(User user) {
         this.user = user;
     }
+
+    static PostCommnad getInstance(PostCommnad obj) {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

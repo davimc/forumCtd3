@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SamplePostDTO {
+public abstract class SamplePostDTO {
 
     private Long id;
     private String message;
