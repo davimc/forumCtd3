@@ -2,30 +2,27 @@ package br.com.ctd.Forum.dtos;
 
 import br.com.ctd.Forum.entities.SamplePost;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class SamplePostDTO {
-
+public abstract class SamplePostDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String message;
     private LocalDate date;
     private Long upVote;
-    private Long downVotes;
+    private Long downVote;
     private Long relevance;
-
-    private List infos = new ArrayList();
 
     public SamplePostDTO() {
     }
 
-    public SamplePostDTO(Long id, String message, LocalDate date, Long upVote, Long downVotes, Long relevance) {
+    public SamplePostDTO(Long id, String message, LocalDate date, Long upVote, Long downVote, Long relevance) {
         this.id = id;
         this.message = message;
         this.date = date;
         this.upVote = upVote;
-        this.downVotes = downVotes;
+        this.downVote = downVote;
         this.relevance = relevance;
     }
     public SamplePostDTO(SamplePost obj) {
@@ -33,8 +30,37 @@ public abstract class SamplePostDTO {
         this.message = obj.getMessage();
         this.date = obj.getDate();
         this.upVote = obj.getUpVote();
-        this.downVotes = obj.getDownVote();
+        this.downVote = obj.getDownVote();
         this.relevance = obj.getRelevance();
 
+    }
+    public SamplePostDTO(SamplePostNewDTO dto) {
+        this.message = dto.getMessage();
+        this.date = dto.getDate();
+        this.upVote = dto.getUpVote();
+        this.downVote = dto.getDownVote();
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public Long getUpVote() {
+        return upVote;
+    }
+
+    public Long getDownVote() {
+        return downVote;
+    }
+
+    public Long getRelevance() {
+        return relevance;
     }
 }
